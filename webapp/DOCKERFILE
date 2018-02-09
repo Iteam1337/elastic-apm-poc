@@ -1,0 +1,16 @@
+FROM node:9.5
+
+WORKDIR /app
+
+COPY package.json /app
+COPY package-lock.json /app
+
+RUN npm install --production
+
+COPY bin /app
+COPY app.js /app
+COPY public /app
+COPY routes /app
+COPY views /app
+
+CMD npm start

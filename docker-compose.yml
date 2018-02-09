@@ -1,0 +1,21 @@
+version: "3.1"
+services:
+  apm-server:
+    build: apm-server
+    ports:
+      - 8200:8200
+  elastic:
+    image: elasticsearch:5.6
+    ports:
+      - 9200:9200
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.1
+    environment:
+      # SERVER_NAME: kibana.example.org
+      ELASTICSEARCH_URL: http://localhost
+    ports:
+      - 5601:5601
+  #webapp:
+  #  build: webapp
+  #  ports:
+  #    - 3000:3000
