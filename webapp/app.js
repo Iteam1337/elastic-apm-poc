@@ -17,7 +17,7 @@ const apm = require('elastic-apm-node')
     // secretToken: '',
 
     // Set custom APM Server URL (default: http://localhost:8200)
-    // serverUrl: '',
+    serverUrl: 'http://localhost:8200',
   })
 
 const app = express()
@@ -44,8 +44,11 @@ app.use((req, res, next) => {
   next(err)
 })
 
+app.use(apm.middleware.connect())
+
 // error handler
 app.use((err, req, res, next) => {
+  apm.captureError(err)
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
